@@ -8,6 +8,7 @@ import {
   selectUserPhoto,
   selectUserEmail,
   setUserLoginDetails,
+  setSignOutState,
 } from "../features/user/userSlice";
 
 function Header(props) {
@@ -28,13 +29,23 @@ function Header(props) {
 
   //calls for pop up onclick of login button
   const handleAuth = () => {
-    auth
-      .signInWithPopup(provider)
-      .then((result) => {
-        console.log(result);
-        setUser(result.user);
-      })
-      .catch((err) => alert(err.message));
+    if (!userName) {
+      auth
+        .signInWithPopup(provider)
+        .then((result) => {
+          console.log(result);
+          setUser(result.user);
+        })
+        .catch((err) => alert(err.message));
+    } else if (userName) {
+      auth
+        .signOut()
+        .then(() => {
+          dispatch(setSignOutState());
+          navigate("/");
+        })
+        .catch((err) => alert(err.message));
+    }
   };
 
   //sending the users info from the payload object to the redux store
