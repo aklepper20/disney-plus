@@ -21,6 +21,7 @@ function Header(props) {
     auth
       .signInWithPopup(provider)
       .then((result) => {
+        console.log(result);
         setUser(result.user);
       })
       .catch((err) => alert(err.message));
@@ -187,3 +188,5 @@ const UserImg = styled.img`
 `;
 
 export default Header;
+
+//Tenerary: If I am not logged in, just show the login button and not the navbar links. If I am logged in, put the users google gmail account photo there with the nav bar links
