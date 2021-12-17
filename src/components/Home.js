@@ -2,12 +2,14 @@ import styled from "styled-components";
 import React from "react";
 import ImgSlider from "./ImgSlider";
 import Viewers from "./Viewers";
+import Recommeds from "./Recommeds";
 
 function Home(props) {
   return (
     <Container>
       <ImgSlider />
       <Viewers />
+      <Recommeds />
     </Container>
   );
 }
