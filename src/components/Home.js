@@ -3,6 +3,9 @@ import React from "react";
 import ImgSlider from "./ImgSlider";
 import Viewers from "./Viewers";
 import Recommeds from "./Recommeds";
+import NewDisney from "./NewDisney";
+import Originals from "./Originals";
+import Trending from "./Trending";
 
 function Home(props) {
   return (
@@ -10,6 +13,9 @@ function Home(props) {
       <ImgSlider />
       <Viewers />
       <Recommeds />
+      <NewDisney />
+      <Originals />
+      <Trending />
     </Container>
   );
 }
