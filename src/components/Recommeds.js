@@ -1,35 +1,25 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectRecommend } from "../features/movie/movieSlice";
 
 function Recommeds(props) {
+  const movies = useSelector(selectRecommend);
+
   return (
     <Container>
       <h4>Recommened for You</h4>
       <Content>
-        <Wrap>
-          <Link to="/">
-            <img src="" alt="" />
-          </Link>
-        </Wrap>
-
-        <Wrap>
-          <Link to="/">
-            <img src="" alt="" />
-          </Link>
-        </Wrap>
-
-        <Wrap>
-          <Link to="/">
-            <img src="" alt="" />
-          </Link>
-        </Wrap>
-
-        <Wrap>
-          <Link to="/">
-            <img src="" alt="" />
-          </Link>
-        </Wrap>
+        {movies &&
+          movies.map((movie, key) => (
+            <Wrap key={key}>
+              {movie.id}
+              <Link to={`/detail/` + movie.id}>
+                <img src={movie.cardImg} alt={movie.title} />
+              </Link>
+            </Wrap>
+          ))}
       </Content>
     </Container>
   );
@@ -43,10 +33,7 @@ const Content = styled.div`
   display: grid;
   grid-gap: 25px;
   gap: 25px;
-  //left to right 4 columns
   grid-template-columns: repeat(4, minmax(0, 1fr));
-
-  //on mobile device, only show 2 columns
   @media (max-width: 768px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -62,11 +49,10 @@ const Wrap = styled.div`
   position: relative;
   transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
   border: 3px solid rgba(249, 249, 249, 0.1);
-
   img {
     inset: 0px;
     display: block;
-    height: 100px;
+    height: 100%;
     object-fit: cover;
     opacity: 1;
     position: absolute;

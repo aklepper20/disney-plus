@@ -17,33 +17,45 @@ function Home(props) {
   const userName = useSelector(selectUserName);
 
   let recommends = [];
-  let newDisney = [];
+  let newDisneys = [];
   let originals = [];
   let trending = [];
 
   useEffect(() => {
     db.collection("movies").onSnapshot((snapshot) => {
       snapshot.docs.map((doc) => {
+        console.log(recommends);
         switch (doc.data().type) {
           case "recommend":
-            recommends.push({ id: doc.id, ...doc.data() });
+            recommends = [...recommends, { id: doc.id, ...doc.data() }];
             break;
-
+          //expand whatever was existing and add the new record to it. No push bc that is mutating the values
           case "new":
-            newDisney.push({ id: doc.id, ...doc.data() });
+            newDisneys = [...newDisneys, { id: doc.id, ...doc.data() }];
             break;
 
           case "original":
-            originals.push({ id: doc.id, ...doc.data() });
+            originals = [...originals, { id: doc.id, ...doc.data() }];
             break;
 
           case "trending":
-            trending.push({ id: doc.id, ...doc.data() });
+            trending = [...trending, { id: doc.id, ...doc.data() }];
             break;
         }
       });
+
+      dispatch(
+        setMovies({
+          recommend: recommends,
+          newDisney: newDisneys,
+          original: originals,
+          trending: trending,
+        })
+      );
     });
-  });
+  }, [userName]);
+  //only dispatch when the user logs in. grab it from our db and store data in our redux store
+
   return (
     <Container>
       <ImgSlider />
